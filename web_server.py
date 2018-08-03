@@ -49,6 +49,26 @@ class webserverHandler(BaseHTTPRequestHandler):
                 self.send_header('Content-type', 'text/html')
                 self.end_headers()
 
+                menu_items = session.query(MenuItem).all()
+                
+                output = ""
+                output += "<html><body>"
+                output += "<h1>Menu :</h1>"
+                output += "<h3>"
+                for items in menu_items:
+                    output += items.name
+                    output += "<br />"
+                    output += "<a href='#'>Edit</a><br />"
+                    output += "<a href='#'>Delete</a><br /> <br />"
+
+                output += "</h3>"
+                output += "</body></html>"
+                self.wfile.write(output)
+                print output
+                return
+
+                
+
                 
         except IOError:
             self.send_error(404, "File Not Found %s" % self.path)
